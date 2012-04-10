@@ -9,7 +9,7 @@ quickconcat: a simple dynamic concatenator for html, css, and js files
 // List of files, comma-separated paths
 $filelist = $_REQUEST[ "files" ];
 // If needed, you can add a url prefix here for files, like "../"
-$baseurl = "../";
+$baseurl = "";
 
 // Enclose each result in an element node with url attribute?
 $wrap = isset( $_REQUEST[ "wrap" ] );

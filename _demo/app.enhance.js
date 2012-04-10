@@ -1,0 +1,66 @@
+/*
+	app.enhance: this example file uses the app.js api to:
+		 * determine whether a browser is qualified for enhancements
+		 * define available CSS and JS assets
+		 * test features and device conditions and environment to determine which files to load
+		 * load those files via a single concatenated call
+*/
+(function( win ){
+
+	//re-reference app var locally
+	var app = win.app;
+	
+	// Add your qualifications for major browser experience divisions here.
+	// For example, you might choose to only enhance browsers that support document.querySelectorAll (IE8+, etc).
+	// Use case will vary, but basic browsers: last stop here!
+	if( !"querySelectorAll" in win.document ){
+		return;
+	}
+	
+	// Configure css and js paths, if desirable.
+	app.basepath.js = app.basepath.css = "_demo/sample-files/";
+	
+	// Define potential JS files for loading
+	app.files.js = {
+		general	: "generalenhancements.js",
+		touch	: "touch.js",
+		widescreen	: "widescreen.js"
+	};
+	
+	// Define potential CSS files for loading
+	app.files.css = {
+		sample		: "sample1.css"
+	};
+	
+	// Start queueing files for load. 
+	// Pass js or css paths one at a time to app.addFile 
+	
+	// Add general js enhancements to all qualified browsers
+	app.addFile( app.files.js.general );
+	
+	// if touch events are supported, add touch file
+	if( "ontouchend" in win.document ){
+		app.addFile( app.files.js.touch );
+	}
+	
+	// if screen is wider than 500px, add widescreen file
+	if( screen.width > 500 ){
+		app.addFile( app.files.js.widescreen );
+	}
+	
+	// add a CSS file if the body has a class of "tmpl-home" 
+	// (beware: don't rely on loading CSS this way for styles that need to apply at page load or you'll get a FOUC)
+	
+	// Note: since we're using hasClass to check if the body element has a class or not, we need to wrap all remaining logic in a call to app.isDefined
+	app.bodyready( function(){
+		
+		if( app.hasClass( win.document.body, "tmpl-home" ) ){
+			app.addFile( app.files.css.sample );
+		}
+		
+		// Load the files, enhance page
+		app.enhance();
+		
+	});
+
+}( window ));

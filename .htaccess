@@ -2,7 +2,7 @@
 # this allows for urls like this: "/path/to/file.html,path/to/fileb.html=concat"
 # or wrapped, "/path/to/file.html,path/to/fileb.html=concat&wrap"
 RewriteEngine On
-RewriteRule ^([^\?]+)=concat(&wrap)?$ _concat/quickconcat.php?files=$1$2
+RewriteRule ^([^\?]+)=concat(&wrap)?$ quickconcat.php?files=$1$2
 
 # compress transfer
 <IfModule mod_deflate.c>

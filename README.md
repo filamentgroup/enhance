@@ -7,6 +7,4 @@ A progressive enhancement bootstrapping pattern.
 
 ## API
 
-TODO!
 
-...for now, check out `tmpl.html`, and `_js/_lib/app.js` and `_/js/app.enhance.js`

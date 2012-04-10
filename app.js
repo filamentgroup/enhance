@@ -20,24 +20,36 @@
 	app.oldIE = app.hasClass( docElem, "ieOld" );
 	app.ie8 = app.hasClass( docElem, "ie8" );
 	
-	// Callback for running body-element-dependent logic
-	app.bodyready = (function(){
-		var callbackStack = [],
-			checkRun = function( callback ){
-				if( callback ){
-					callbackStack.push( callback );
+	// Callback for running logic dependent on a property being defined
+	// You can use isDefined to run code as soon as the document.body is defined, for example, for body-dependent scripts
+	// or, for a script that's loaded asynchronously that depends on other scripts, such as jQuery.
+	// First argument is the property that must be defined, second is the callback function
+	app.onDefine = function( prop, callback ){
+		var callbackStack 	= [];
+		
+		if( callback ){
+			callbackStack.push( callback );
+		}
+		
+		function checkRun(){
+			if( eval( prop ) ){
+				while( callbackStack[0] && typeof( callbackStack[0] ) === "function" ){
+					callbackStack.shift().call( w );
 				}
-				if( doc.body ){
-					while( callbackStack[0] && typeof( callbackStack[0] ) === "function" ){
-						callbackStack.shift().call( w );
-					}
-				}
-				else{
-					setTimeout(checkRun, 15); 
-				}
-			};
-			return checkRun;
-	})();
+			}
+			else{
+				setTimeout(checkRun, 15); 
+			}
+		};
+		
+		checkRun();
+	};
+	
+	// shortcut of isDefine body-specific 
+	app.bodyready = function( callback ){
+		app.onDefine( "document.body", callback );
+	};
+	
 	
 	//private style load function
 	function css( href, media ){
