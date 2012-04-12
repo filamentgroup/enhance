@@ -8,7 +8,13 @@
 (function( win ){
 
 	//re-reference app var locally
-	var app = win.app;
+	var app = win.app,
+		docElem = win.document.documentElement;
+	
+	// IE browser flags, based on conditional comments	
+	app.oldIE = app.hasClass( docElem, "ieOld" );
+	app.ie8 = app.hasClass( docElem, "ie8" );
+	
 	
 	// Add your qualifications for major browser experience divisions here.
 	// For example, you might choose to only enhance browsers that support document.querySelectorAll (IE8+, etc).
@@ -16,6 +22,9 @@
 	if( !"querySelectorAll" in win.document ){
 		return;
 	}
+	
+	// Add "enhanced" class to HTML element
+	docElem.className += " enhanced";
 	
 	// Configure css and js paths, if desirable.
 	app.basepath.js = app.basepath.css = "_demo/sample-files/";

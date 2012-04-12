@@ -16,10 +16,6 @@
 		return elem.className.indexOf( cls ) >= -1
 	}
 	
-	// IE browser flags, based on conditional comments	
-	app.oldIE = app.hasClass( docElem, "ieOld" );
-	app.ie8 = app.hasClass( docElem, "ie8" );
-	
 	// Callback for running logic dependent on a property being defined
 	// You can use isDefined to run code as soon as the document.body is defined, for example, for body-dependent scripts
 	// or, for a script that's loaded asynchronously that depends on other scripts, such as jQuery.
