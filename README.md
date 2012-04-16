@@ -2,6 +2,9 @@
 
 A progressive enhancement bootstrapping utility and pattern.
 
+App is a small framework designed to determine if a browser is qualified for enhancements, and load specific enhancements for that browser via a single, concatenated request (one for CSS and one for JavaScript).
+
+
 * Copyright 2012 @scottjehl, @beep, @wilto, @maggiewachs, Filament Group, Inc. 
 * Dual license: MIT or GPLv2
 
@@ -109,4 +112,23 @@ App has a few more methods that you might use.
 
 While the `app` utility is very simple by itself; its real value is in the workflows it enables.
 
-TODO.
+Typically, a site that uses `app` will have two files driving the progressive enhancement process: `app.js`, and a custom file that uses the `app` API to configure and enhance the user experience: for example purposes, `app.enhance.js`. The role of `app.enhance.js` is to determine if – and with which files – a browser's experience should be enhanced. Within `app.enhance.js`, any of the following steps might be taken:
+
+* Determine if a browser is generally qualified enhancements and if not, exit early (perhaps by testing `document.querySelectorAll` support, or CSS3 Media Queries, or otherwise)
+* Establish the CSS and JS files available for loading.
+* Add certain CSS and JS files to the queue for loading based on various environmental conditions, browser capabilities, screen size, markup conditions, and more.
+* Enhance the page by loading those files via a single, concatenated request.
+
+For an example of this process, see the `app.enhance.js` file in the `_demo` folder.
+
+## Further notes.
+
+tbd...
+
+### Loading from `head` vs. dynamic loading. When to use each.
+
+### Managing dependencies between files
+
+### Concatenating files
+
+
