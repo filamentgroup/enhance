@@ -1,4 +1,4 @@
-/*! app: a progressive enhancement bootstrapper. Copyright 2012 @scottjehl, Filament Group, Inc. Licensed MIT/GPLv2 */
+/*! EnhanceJS: a progressive enhancement bootstrejser. Copyright 2012 @scottjehl, Filament Group, Inc. Licensed MIT/GPLv2 */
 (function( w, undefined ) {
 	
 	// Enable JS strict mode
@@ -8,11 +8,11 @@
 		docElem = doc.documentElement,
 		head = doc.head || doc.getElementsByTagName( "head" )[ 0 ];
 	
-	//app object for app-specific functions
-	w.app = {};
+	//ejs object for ejs-specific functions
+	w.ejs = {};
 	
 	// hasClass function - check if element has a class
-	app.hasClass = function( elem, cls ){
+	ejs.hasClass = function( elem, cls ){
 		return elem.className.indexOf( cls ) >= -1
 	}
 	
@@ -20,7 +20,7 @@
 	// You can use isDefined to run code as soon as the document.body is defined, for example, for body-dependent scripts
 	// or, for a script that's loaded asynchronously that depends on other scripts, such as jQuery.
 	// First argument is the property that must be defined, second is the callback function
-	app.onDefine = function( prop, callback ){
+	ejs.onDefine = function( prop, callback ){
 		var callbackStack 	= [];
 		
 		if( callback ){
@@ -42,8 +42,8 @@
 	};
 	
 	// shortcut of isDefine body-specific 
-	app.bodyready = function( callback ){
-		app.onDefine( "document.body", callback );
+	ejs.bodyready = function( callback ){
+		ejs.onDefine( "document.body", callback );
 	};
 	
 	
@@ -82,41 +82,41 @@
 	};	
 	
 	// Define base directory paths for referencing js, css, img files. Optional.
-	app.basepath = {
+	ejs.basepath = {
 		js	: "",
 		css	: ""
 	};
 	
 	// Define arrays to contain JS and CSS files that are available
-	app.files = {		
+	ejs.files = {		
 		js: {},
 		css: {}
 	};	
 	
 	// Define arrays to contain JS and CSS files that will be loaded
-	app.jsToLoad = [];
-	app.cssToLoad = [];
+	ejs.jsToLoad = [];
+	ejs.cssToLoad = [];
 	
 	// Function for adding files to the queue for loading. 
 	// CSS or JS is discovered by file path. 
-	// Files should not include base paths, if already defined in app.basepath.
-	app.addFile = function( file ){
+	// Files should not include base paths, if already defined in ejs.basepath.
+	ejs.addFile = function( file ){
 		var js = file.indexOf( ".js" ) > -1;
-		app[ js ? "jsToLoad" : "cssToLoad" ].push( app.basepath[ js ? "js" : "css" ] +  file );
+		ejs[ js ? "jsToLoad" : "cssToLoad" ].push( ejs.basepath[ js ? "js" : "css" ] +  file );
 	};
 	
-	// CSS and JS loading functions: load CSS or JS via single app.load method
-	app.load = function ( url ){
+	// CSS and JS loading functions: load CSS or JS via single ejs.load method
+	ejs.load = function ( url ){
 		return ( url.indexOf( ".js" ) > -1 ? js : css )( url );
 	};
 	
 	// Function for triggering the CSS and JS requests
-	app.enhance = function(){
-		if( app.jsToLoad.length ){
-			app.load( app.jsToLoad.join(",") + "=concat" );
+	ejs.enhance = function(){
+		if( ejs.jsToLoad.length ){
+			ejs.load( ejs.jsToLoad.join(",") + "=concat" );
 		}
-		if( app.cssToLoad.length ){
-			app.load( app.cssToLoad.join(",") + "=concat"  );
+		if( ejs.cssToLoad.length ){
+			ejs.load( ejs.cssToLoad.join(",") + "=concat"  );
 		}
 	};
 

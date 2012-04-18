@@ -1,5 +1,5 @@
 /*
-	app.enhance: this example file uses the app.js api to:
+	ejs.enhance: this example file uses the ejs.js api to:
 		 * determine whether a browser is qualified for enhancements
 		 * define available CSS and JS assets
 		 * test features and device conditions and environment to determine which files to load
@@ -7,13 +7,13 @@
 */
 (function( win ){
 
-	//re-reference app var locally
-	var app = win.app,
+	//re-reference ejs var locally
+	var ejs = win.ejs,
 		docElem = win.document.documentElement;
 	
 	// IE browser flags, based on conditional comments	
-	app.oldIE = app.hasClass( docElem, "ieOld" );
-	app.ie8 = app.hasClass( docElem, "ie8" );
+	ejs.oldIE = ejs.hasClass( docElem, "ieOld" );
+	ejs.ie8 = ejs.hasClass( docElem, "ie8" );
 	
 	// Add your qualifications for major browser experience divisions here.
 	// For example, you might choose to only enhance browsers that support document.querySelectorAll (IE8+, etc).
@@ -26,48 +26,48 @@
 	docElem.className += " enhanced";
 	
 	// Configure css and js paths, if desirable.
-	app.basepath.js = app.basepath.css = "_demo/sample-files/";
+	ejs.basepath.js = ejs.basepath.css = "_demo/sample-files/";
 	
 	// Define potential JS files for loading
-	app.files.js = {
+	ejs.files.js = {
 		general	: "generalenhancements.js",
 		touch	: "touch.js",
 		widescreen	: "widescreen.js"
 	};
 	
 	// Define potential CSS files for loading
-	app.files.css = {
+	ejs.files.css = {
 		sample		: "sample1.css"
 	};
 	
 	// Start queueing files for load. 
-	// Pass js or css paths one at a time to app.addFile 
+	// Pass js or css paths one at a time to ejs.addFile 
 	
 	// Add general js enhancements to all qualified browsers
-	app.addFile( app.files.js.general );
+	ejs.addFile( ejs.files.js.general );
 	
 	// if touch events are supported, add touch file
 	if( "ontouchend" in win.document ){
-		app.addFile( app.files.js.touch );
+		ejs.addFile( ejs.files.js.touch );
 	}
 	
 	// if screen is wider than 500px, add widescreen file
 	if( screen.width > 500 ){
-		app.addFile( app.files.js.widescreen );
+		ejs.addFile( ejs.files.js.widescreen );
 	}
 	
 	// add a CSS file if the body has a class of "tmpl-home" 
-	// (beware: don't rely on loading CSS this way for styles that need to apply at page load or you'll get a FOUC)
+	// (beware: don't rely on loading CSS this way for styles that need to ejsly at page load or you'll get a FOUC)
 	
-	// Note: since we're using hasClass to check if the body element has a class or not, we need to wrap all remaining logic in a call to app.isDefined
-	app.bodyready( function(){
+	// Note: since we're using hasClass to check if the body element has a class or not, we need to wrap all remaining logic in a call to ejs.isDefined
+	ejs.bodyready( function(){
 		
-		if( app.hasClass( win.document.body, "tmpl-home" ) ){
-			app.addFile( app.files.css.sample );
+		if( ejs.hasClass( win.document.body, "tmpl-home" ) ){
+			ejs.addFile( ejs.files.css.sample );
 		}
 		
 		// Load the files, enhance page
-		app.enhance();
+		ejs.enhance();
 		
 	});
 
