@@ -11,10 +11,6 @@
 	var ejs = win.ejs,
 		docElem = win.document.documentElement;
 	
-	// IE browser flags, based on conditional comments	
-	ejs.oldIE = ejs.hasClass( docElem, "ieOld" );
-	ejs.ie8 = ejs.hasClass( docElem, "ie8" );
-	
 	// Add your qualifications for major browser experience divisions here.
 	// For example, you might choose to only enhance browsers that support document.querySelectorAll (IE8+, etc).
 	// Use case will vary, but basic browsers: last stop here!
