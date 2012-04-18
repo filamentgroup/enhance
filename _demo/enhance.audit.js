@@ -56,7 +56,7 @@
 	// (beware: don't rely on loading CSS this way for styles that need to ejsly at page load or you'll get a FOUC)
 	
 	// Note: since we're using hasClass to check if the body element has a class or not, we need to wrap all remaining logic in a call to ejs.isDefined
-	ejs.bodyready( function(){
+	ejs.bodyReady( function(){
 		
 		if( ejs.hasClass( win.document.body, "tmpl-home" ) ){
 			ejs.addFile( ejs.files.css.sample );

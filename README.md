@@ -60,9 +60,9 @@ All of the Enhance api is available via `window.ejs` or just `ejs`. From `ejs`, 
 		});
 	In a pinch, `onDefine` could also be used to delay code execution until another JS file has loaded and executed.
 
-- `bodyready`: run a callback function when the body element is defined. Accepts one argument: a callback function to execute when the `body` element becomes defined. This is merely a shortcut to the `onDefine` example above. Example:
+- `bodyReady`: run a callback function when the body element is defined. Accepts one argument: a callback function to execute when the `body` element becomes defined. This is merely a shortcut to the `onDefine` example above. Example:
 
-		ejs.bodyready( function(){
+		ejs.bodyReady( function(){
 			if( ejs.hasClass( document.body, "home" ) ){
 				// the body element has a class of "home"...
 			}

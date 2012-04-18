@@ -42,7 +42,7 @@
 	};
 	
 	// shortcut of isDefine body-specific 
-	ejs.bodyready = function( callback ){
+	ejs.bodyReady = function( callback ){
 		ejs.onDefine( "document.body", callback );
 	};
 	
