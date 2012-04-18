@@ -112,14 +112,14 @@ Enhance has a few more methods that you might use.
 
 While the Enhance core utility is very simple by itself; its real value is in the workflows it enables.
 
-Typically, a site that uses Enhance will have at least two files driving the progressive enhancement process: `app.js`, and a custom file that uses the `ejs` API to configure and enhance the user experience: for example purposes, `app.enhance.js`. The role of `app.enhance.js` is to determine if – and with which files – a browser's experience should be enhanced. Within `app.enhance.js`, any of the following steps might be taken:
+Typically, a site that uses Enhance will have at least two files driving the progressive enhancement process: `enhance.js`, and a custom file that uses the `ejs` API to configure and enhance the user experience: for example purposes, `enhance.audit.js`. The role of `enhance.audit.js` is to determine if – and with which files – a browser's experience should be enhanced. Within `enhance.audit.js`, any of the following steps might be taken:
 
 * Determine if a browser is generally qualified enhancements and if not, exit early (perhaps by testing `document.querySelectorAll` support, or CSS3 Media Queries, or otherwise)
 * Establish the CSS and JS files available for loading.
 * Add certain CSS and JS files to the queue for loading based on various environmental conditions, browser capabilities, screen size, markup conditions, and more.
 * Enhance the page by loading those files via a single, concatenated request.
 
-For an example of this process, see the `app.enhance.js` file in the `_demo` folder.
+For an example of this process, see the `enhance.audit.js` file in the `_demo` folder.
 
 ## Further notes.
 

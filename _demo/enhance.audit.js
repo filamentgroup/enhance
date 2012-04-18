@@ -7,7 +7,7 @@
 */
 (function( win ){
 
-	//re-reference ejs var locally
+	// re-reference ejs var locally
 	var ejs = win.ejs,
 		docElem = win.document.documentElement;
 	
