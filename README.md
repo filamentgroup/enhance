@@ -51,7 +51,7 @@ All of the Enhance api is available via `window.ejs` or just `ejs`. From `ejs`, 
 		ejs.hasClass( document.documentElement, "home" );
 		--> true | false
 
-- `onDefine`: run a callback function as soon as a JS property is defined. Accepts 2 arguments: a string to be evaluated for definition, and a callback function to execute when that first string becomes defined. `onDefine` might be used to run a script when an element is ready for manipulation, such as checking if the `body` element has a particular class. Example:
+- `onDefine`: run a callback function as soon as a JS property is defined, such as an HTML element like `body` that may not  have loaded at execution time. Accepts 2 arguments: a string to be evaluated for definition, and a callback function to execute when that first string becomes defined. `onDefine` might be used to run a script when an element is ready for manipulation, such as checking if the `body` element has a particular class. Example:
 
 		ejs.onDefine( "document.body", function(){
 			if( ejs.hasClass( document.body, "home" ) ){
@@ -59,14 +59,17 @@ All of the Enhance api is available via `window.ejs` or just `ejs`. From `ejs`, 
 			}
 		});
 	In a pinch, `onDefine` could also be used to delay code execution until another JS file has loaded and executed.
+	
+	_note_: `onDefine` uses asynchronous timing, so if you need to use it during your qualification and enhancement process, you'll need to ensure any  logic that depends on the result of that callback executes afterwards, which can be acheived by wrapping it all in the `onDefine` callback.
 
-- `bodyReady`: run a callback function when the body element is defined. Accepts one argument: a callback function to execute when the `body` element becomes defined. This is merely a shortcut to the `onDefine` example above. Example:
+- `bodyReady`: run a callback function when the `body` element is defined. Accepts one argument: a callback function to execute when the `body` element becomes defined. This is merely a shortcut to the `onDefine` example above. Example:
 
 		ejs.bodyReady( function(){
 			if( ejs.hasClass( document.body, "home" ) ){
 				// the body element has a class of "home"...
 			}
 		} );
+	_note_: `bodyReady` uses asynchronous timing, so if you need to use it during your qualification and enhancement process, you'll need to ensure any  logic that depends on the result of that callback executes afterwards, which can be acheived by wrapping it all in the `bodyReady` callback.
 
 - `addFile`: add a CSS or JavaScript file to the queue for loading. This method accepts one argument, a string reference to a file. Example:
 
