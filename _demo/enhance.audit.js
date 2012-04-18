@@ -1,5 +1,5 @@
 /*
-	ejs.enhance: this example file uses the ejs.js api to:
+	enhance.audit: this example file uses the enhance.js api to:
 		 * determine whether a browser is qualified for enhancements
 		 * define available CSS and JS assets
 		 * test features and device conditions and environment to determine which files to load
