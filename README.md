@@ -93,16 +93,16 @@ Enhance has a few more methods that you might use.
 		ejs.load( "files/js/foo.js" );
 	
 
-- `js`: Load a single JavaScript file. Useful if JS filetype can not be guessed by filetype. Example:
+- `loadJS`: Load a single JavaScript file. Useful if JS filetype can not be guessed by filetype. Example:
 
 		// Load a single JavaScript file
-		ejs.css( "files/js/foo.php" );
+		ejs.loadJS( "files/js/foo.php" );
 
 
-- `css`: Load a single CSS file**. Useful if JS filetype can not be guessed by filetype. Example:
+- `loadCSS`: Load a single CSS file**. Useful if JS filetype can not be guessed by filetype. Example:
 
 		// Load a single CSS file
-		ejs.css( "files/css/foo.php" );
+		ejs.loadCSS( "files/css/foo.php" );
 
 
 ** Note: dynamically loaded CSS is not guaranteed to render before the page content begins visually rendering (and thus, can cause a FOUC). Don't depend on it for styles that need to be there during initial page load.

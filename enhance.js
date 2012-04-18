@@ -48,7 +48,7 @@
 	
 	
 	//private style load function
-	function css( href, media ){
+	ejs.loadCSS = function( href, media ){
 		var lk = doc.createElement( "link" ),
 			links = head.getElementsByTagName( "link" ),
 			lastlink = links[ links.length-1 ];
@@ -69,7 +69,7 @@
 	};
 	
 	// Private script load function
-	function js( src ){
+	ejs.loadJS = function( src ){
 		var script = doc.createElement( "script" ),
 			fc = head.firstChild;
 			script.src = src;
@@ -107,7 +107,7 @@
 	
 	// CSS and JS loading functions: load CSS or JS via single ejs.load method
 	ejs.load = function ( url ){
-		return ( url.indexOf( ".js" ) > -1 ? js : css )( url );
+		return ( url.indexOf( ".js" ) > -1 ? ejs.loadJS : ejs.loadCSS )( url );
 	};
 	
 	// Function for triggering the CSS and JS requests
