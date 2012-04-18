@@ -80,9 +80,9 @@ All of the Enhance api is available via `window.ejs` or just `ejs`. From `ejs`, 
 
 
 
-### Additional Methods
+### Additional Methods and Properties
 
-Enhance has a few more methods that you might use.
+Enhance has a few more methods and properties that you might use in more complicated scenarios.
 
 - `load`: Load a single CSS** or JavaScript file. This method accepts one argument, a string reference to a file. The type of file is determined by file extension. Example:
 
@@ -93,17 +93,19 @@ Enhance has a few more methods that you might use.
 		ejs.load( "files/js/foo.js" );
 	
 
-- `loadJS`: Load a single JavaScript file. Useful if JS filetype can not be guessed by filetype. Example:
+- `loadJS`: Load a single JavaScript file.  This method accepts one argument, a string reference to a file. Useful if JS filetype can not be guessed by filetype. Example:
 
 		// Load a single JavaScript file
 		ejs.loadJS( "files/js/foo.php" );
 
 
-- `loadCSS`: Load a single CSS file**. Useful if JS filetype can not be guessed by filetype. Example:
+- `loadCSS`: Load a single CSS file**.  This method accepts one argument, a string reference to a file. Useful if JS filetype can not be guessed by filetype. Example:
 
 		// Load a single CSS file
 		ejs.loadCSS( "files/css/foo.php" );
 
+- `jsToLoad`: an array of JavaScript files currently in the queue for loading.
+- `cssToLoad`: an array of CSS files currently in the queue for loading.
 
 ** Note: dynamically loaded CSS is not guaranteed to render before the page content begins visually rendering (and thus, can cause a FOUC). Don't depend on it for styles that need to be there during initial page load.
 
