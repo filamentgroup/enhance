@@ -12,7 +12,7 @@ Together these tools form the core of Filament Group's progressive enhancement w
 
 ## Enhance.js
 
-`Enhance.js` is a tiny JavaScript framework designed to help developers determine if a browser is capable of handling additional JavaScript and CSS enhancements, and load specific enhancements for that browser as fast and simply as possible. `Enhance.js` provides [an API](https://github.com/filamentgroup/enhance/#readme) for some simple tasks such as checking whether an element has a particular classname, and assembling and requesting JavaScript and CSS files via a single, concatenated request. 
+`Enhance.js` is a tiny JavaScript framework designed to help developers determine if a browser is capable of handling additional JavaScript and CSS enhancements, and load specific enhancements for that browser as fast and simply as possible. `Enhance.js` provides [an API](https://github.com/filamentgroup/enhance/blob/master/_docs/API.md) for some simple tasks such as checking whether an element has a particular classname, and assembling and requesting JavaScript and CSS files via a single, concatenated request. 
 
 Typically, a site that uses Enhance will start by including (anywhere in the page, or in the `head` if necessary) at least two JavaScript files that will drive the progressive enhancement process: `enhance.js`, and a custom file that uses the `ejs` API to configure and enhance the user experience (or not) based on various conditions: for example purposes, we'll call that custom file `enhance.audit.js`. The role of `enhance.audit.js` is to determine if – and with which files – a browser's experience should be enhanced. Within `enhance.audit.js`, the following steps might be taken:
 
@@ -25,7 +25,7 @@ For an example of how this process actually breaks down in JavaScript, check out
 
 _Note that loading CSS dynamically, or lazily, in this fashion can cause undesirable results because it will likely arrive after the website has begun rendering, causing a FOUC when its styles snap into place. Because of this, you'll want to include any CSS that's essential to rendering the page being requested via the `head` of the page, through a traditional `style` tag. This limitation means `enhance.js` is more useful for loading JavaScript files, but you can use it to load CSS as well, as long as that CSS is not critical to the intial page rendering (styles associated with an overlay panel not currently in view might be a good candidate for this sort of loading)._
 
-All of these tasks can be facilitated simply through the [`enhance.js` `api`](_docs/API.md). However, Enhance.js itself does not handle the server-side concatenation that it is designed to interface with. Nor does it handle the application of enhancements itself. For those, let's move on.
+All of these tasks can be facilitated simply through the [`enhance.js` `api`](https://github.com/filamentgroup/enhance/blob/master/_docs/API.md). However, Enhance.js itself does not handle the server-side concatenation that it is designed to interface with. Nor does it handle the application of enhancements itself. For those, let's move on.
 
 ## QuickConcat
 
@@ -98,5 +98,5 @@ AjaxInclude expects the concatenator's response to wrap each HTML file in an ide
 
 ## Wrap-up
 
-The tools above combine to form the backbone of the Enhance workflow. Now that you understand the foundations, seeing it all in action should bring additional clarity. This repository includes a demo ([_demo.html](_demo.html)) that uses "Enhance" and "QuickConcat" to conditionally load a set of JavaScript and CSS files. We'll look to improve the demo further to utilize Wrap and AjaxInclude as well soon, but this should give you a good idea of how things can work.
+The tools above combine to form the backbone of the Enhance workflow. Now that you understand the foundations, seeing it all in action should bring additional clarity. This repository includes a demo ([_demo.html](https://github.com/filamentgroup/enhance/blob/master/_demo.html)) that uses "Enhance" and "QuickConcat" to conditionally load a set of JavaScript and CSS files. If you check out the repo and run it on a web server, you'll get the full effect. We'll look to improve the demo further to utilize Wrap and AjaxInclude as well soon, but this should give you a good idea of how things can work.
 
