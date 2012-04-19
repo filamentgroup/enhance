@@ -1,139 +1,69 @@
 # Enhance
+## A progressive enhancement workflow for cross-device web applications
 
-A progressive enhancement bootstrapping utility and pattern.
+Enhance is a progressive enhancement workflow developed at [Filament Group](http://filamentgroup.com). It is designed to help developers deliver rich web experiences that are accessible to the widest range of devices possible, and catered to the capabilities and constraints of each device. The "Enhance" workflow utilizes several tools, all of which are independent Github projects themselves:
 
-Enhance is a small framework designed to determine if a browser is qualified for enhancements, and load specific enhancements for that browser via a single, concatenated request (one for CSS and one for JavaScript).
+- `Enhance.js`: (_hosted in this repository_) a tiny JavaScript framework designed to help developers determine if a browser is capable of handling additional JavaScript and CSS enhancements, and load specific enhancements for that browser as fast and simply as possible.
+- [QuickConcat](https://github.com/filamentgroup/quickconcat): a simple dynamic concatenator for html, css, and js files, written in PHP
+- [Wrap](https://github.com/filamentgroup/wrap): a modular JavaScript library for DOM manipulation and Ajax, inspired by the jQuery API
+- [AjaxInclude](https://github.com/filamentgroup/ajaxinclude): a plugin that is designed for modular content construction, that runs on Wrap (or jQuery)
 
+Together these tools form the core of Filament Group's progressive enhancement workflow; let's break down the role that each one plays.
 
-* Copyright 2012 @scottjehl, @beep, @wilto, @maggiewachs, Filament Group, Inc. 
-* Dual license: MIT or GPLv2
+## Enhance.js
 
-## API
+`Enhance.js` is a tiny JavaScript framework designed to help developers determine if a browser is capable of handling additional JavaScript and CSS enhancements, and load specific enhancements for that browser as fast and simply as possible. `Enhance.js` provides [an API](https://github.com/filamentgroup/enhance/#readme) for some simple tasks such as checking whether an element has a particular classname, and assembling and requesting JavaScript and CSS files via a single, concatenated request. 
 
-All of the Enhance api is available via `window.ejs` or just `ejs`. From `ejs`, you can access the following publicly:
+Typically, a site that uses Enhance will start by including (anywhere in the page, or in the `head` if necessary) at least two JavaScript files that will drive the progressive enhancement process: `enhance.js`, and a custom file that uses the `ejs` API to configure and enhance the user experience (or not) based on various conditions: for example purposes, we'll call that custom file `enhance.audit.js`. The role of `enhance.audit.js` is to determine if – and with which files – a browser's experience should be enhanced. Within `enhance.audit.js`, the following steps might be taken:
 
-
-
-### Configuration Properties
-
-- `files`: an object consisting of two empty child objects: `js` and `css`. These two objects are empty by default, and are intended for storing references to CSS** and JavaScript files that will potentially be loaded. You can reference them like so:
-
-		// list of available JS files
-		ejs.files.js = {
-			jQuery: "js/jquery.js",
-			touchNormalization: "touch.js",
-			uiLogic: "js/myapp.js"
-		};
-		
-		// list of available CSS files
-		ejs.files.css = {
-			accountPanel: "css/account.css"
-		};
-		
-
-- `basepath`: an object consisting of two empty strings: `js` and `css`. These can be used to store optional base file paths to CSS and JS directories. When in use, you can exclude those paths from references to files in `ejs.files.js` and `ejs.files.css`. Example:
-
-		// reference to base javascript filepath
-		ejs.basepath.js = "assets/js/";
-		
-		// reference to base CSS filepath
-		ejs.basepath.css = "assets/css/";
-		
-
-
-
-
-### Methods
-
-- `hasClass`: check whether an element has a particular class or not. Returns a boolean result. Example:
-
-		// check if HTML element has class of "ie8"
-		ejs.hasClass( document.documentElement, "home" );
-		--> true | false
-
-- `onDefine`: run a callback function as soon as a JS property is defined, such as an HTML element like `body` that may not  have loaded at execution time. Accepts 2 arguments: a string to be evaluated for definition, and a callback function to execute when that first string becomes defined. `onDefine` might be used to run a script when an element is ready for manipulation, such as checking if the `body` element has a particular class. Example:
-
-		ejs.onDefine( "document.body", function(){
-			if( ejs.hasClass( document.body, "home" ) ){
-				// the body element has a class of "home"...
-			}
-		});
-	In a pinch, `onDefine` could also be used to delay code execution until another JS file has loaded and executed.
-	
-	_note_: `onDefine` uses asynchronous timing, so if you need to use it during your qualification and enhancement process, you'll need to ensure any  logic that depends on the result of that callback executes afterwards, which can be acheived by wrapping it all in the `onDefine` callback.
-
-- `bodyReady`: run a callback function when the `body` element is defined. Accepts one argument: a callback function to execute when the `body` element becomes defined. This is merely a shortcut to the `onDefine` example above. Example:
-
-		ejs.bodyReady( function(){
-			if( ejs.hasClass( document.body, "home" ) ){
-				// the body element has a class of "home"...
-			}
-		} );
-	_note_: `bodyReady` uses asynchronous timing, so if you need to use it during your qualification and enhancement process, you'll need to ensure any  logic that depends on the result of that callback executes afterwards, which can be acheived by wrapping it all in the `bodyReady` callback.
-
-- `addFile`: add a CSS or JavaScript file to the queue for loading. This method accepts one argument, a string reference to a file. Example:
-
-		ejs.addFile( "js/foo.js" );
-		ejs.addFile( "css/foo.css" );
-
-- `enhance`: load all queued CSS and JavaScript files via a single, concatenated request (per language). Example:
-
-		ejs.enhance();
-
-
-
-
-### Additional Methods and Properties
-
-Enhance has a few more methods and properties that you might use in more complicated scenarios.
-
-- `load`: Load a single CSS** or JavaScript file. This method accepts one argument, a string reference to a file. The type of file is determined by file extension. Example:
-
-		// Load a single css file
-		ejs.load( "files/css/foo.css" );
-		
-		// Load a single JavaScript file
-		ejs.load( "files/js/foo.js" );
-	
-
-- `loadJS`: Load a single JavaScript file.  This method accepts one argument, a string reference to a file. Useful if JS filetype can not be guessed by filetype. Example:
-
-		// Load a single JavaScript file
-		ejs.loadJS( "files/js/foo.php" );
-
-
-- `loadCSS`: Load a single CSS file**.  This method accepts one argument, a string reference to a file. Useful if JS filetype can not be guessed by filetype. Example:
-
-		// Load a single CSS file
-		ejs.loadCSS( "files/css/foo.php" );
-
-- `jsToLoad`: an array of JavaScript files currently in the queue for loading.
-- `cssToLoad`: an array of CSS files currently in the queue for loading.
-
-** Note: dynamically loaded CSS is not guaranteed to render before the page content begins visually rendering (and thus, can cause a FOUC). Don't depend on it for styles that need to be there during initial page load.
-
-
-## Typical workflow
-
-While the Enhance core utility is very simple by itself; its real value is in the workflows it enables.
-
-Typically, a site that uses Enhance will have at least two files driving the progressive enhancement process: `enhance.js`, and a custom file that uses the `ejs` API to configure and enhance the user experience: for example purposes, `enhance.audit.js`. The role of `enhance.audit.js` is to determine if – and with which files – a browser's experience should be enhanced. Within `enhance.audit.js`, any of the following steps might be taken:
-
-* Determine if a browser is generally qualified enhancements and if not, exit early (perhaps by testing `document.querySelectorAll` support, or CSS3 Media Queries, or otherwise)
-* Establish the CSS and JS files available for loading.
-* Add certain CSS and JS files to the queue for loading based on various environmental conditions, browser capabilities, screen size, markup conditions, and more.
+* Determine if a browser is broadly qualified enhancements and if not, exit early (a broad qualification might consist of detecting `document.querySelectorAll` support, CSS3 Media Queries support, or any other technology critical to an application's enhanced experience)
+* Reference the JavaScript and CSS files that may potentially be loaded
+* Queue certain files for loading based on various environmental conditions, browser capabilities, screen size, markup conditions, and more.
 * Enhance the page by loading those files via a single, concatenated request.
 
-For an example of this process, see the `enhance.audit.js` file in the `_demo` folder.
+For an example of how this process actually breaks down in JavaScript, check out the `enhance.audit.js` file in this repository.
 
-## Further notes.
+_Note that loading CSS dynamically, or lazily, in this fashion can cause undesirable results because it will likely arrive after the website has begun rendering, causing a FOUC when its styles snap into place. Because of this, you'll want to include any CSS that's essential to rendering the page being requested via the `head` of the page, through a traditional `style` tag. This limitation means `enhance.js` is more useful for loading JavaScript files, but you can use it to load CSS as well, as long as that CSS is not critical to the intial page rendering (styles associated with an overlay panel not currently in view might be a good candidate for this sort of loading)._
 
-tbd...
+All of these tasks can be facilitated simply through the [`enhance.js` `api`](_docs/API.md). However, Enhance.js itself does not handle the server-side concatenation that it is designed to interface with. Nor does it handle the application of enhancements itself. For those, let's move on.
 
-### Loading from `head` vs. dynamic loading. When to use each.
+## QuickConcat
 
-### Managing dependencies between files
+[QuickConcat](https://github.com/filamentgroup/quickconcat) is a simple dynamic concatenator for html, css, and js files, written in PHP. Interacting with QuickConcat is simple: send it a URL containing several comma-separated filepaths, and it will combine those files and return them as a single response. It has a few simple features, described in its README, but basically, a QuickConcat URL looks something like the following:
 
-### Concatenating files
+    quickconcat.php?files=js/myfileA.js,js/myfileB.js
+
+Or better yet...
+
+    js/myfileA.js,js/myfileB.js=concat
+
+That's pretty much it; you can find the `quickconcat.php` source code along with more examples and implementation notes in the [QuickConcat project readme](https://github.com/filamentgroup/quickconcat#readme).
+
+Within the Enhance workflow, QuickConcat is used by `Enhance.js` to combine many different JavaScript or CSS files into a single request (per language). It is also used by `AjaxInclude` to combine different HTML files (more on that below). QuickConcat can also be used manually to combine JavaScript and stylesheet references in your document. For example, a site using Enhance might start by including `enhance.js` and `enhance.audit.js` like so:
+
+    <script src="/_js/lib/enhance.js,/_js/enhance.audit.js"></script>
+
+...and the necessary CSS files
+
+Like many of the tools that comprise the Enhance pattern, QuickConcat is just as much a functional tool as it is a suggested pattern - the technology behind the implementation is less important than the workflow it facilitates. For small-scale production environments, quickconcat.php itself may be a suitable tool for use in a live website. However, at Filament Group, we typically only use QuickConcat during the initial development phase of a project, as it is easy to configure and get working quickly but does not include features for serving files quickly in a large-scale production environment. Early in a development phase, we commonly advise clients in building a custom file concatenation service similar to QuickConcat, but more robust and using their preferred languages, so that it can integrate tightly with their system in ways QuickConcat does not (at least by default).
+
+In that vein, we recommend that a dynamic file concatenation tool provides at least the following services when deployed in a large-scale application:
+
+1. Dynamic file concatenation via URL, combining separate files into one response via a comma-separated request (QuickConcat does this)
+2. Minify the source files before or after combination, removing whitespace, comments, and in the case of JavaScript, optimizing the code itself to reduce its weight. Many open-source tools are available for this. We’d recommend checking out the Java-based [Google Closure Compiler](http://code.google.com/closure/compiler/) and [YUI Compressor](http://developer.yahoo.com/yui/compressor/) tools, or the Node.js-based [Uglify.js](https://github.com/mishoo/UglifyJS) (of these, YUI is designed to compress CSS as well).
+3. Transfer the output file in GZIP compressed format. Most server-side environments provide tools for gzip output (see the [QuickConcat Readme](https://github.com/filamentgroup/quickconcat#readme) for an example using Apache)
+4. When a particular combination of files is requested, its output should be saved as a static resource on the site's server or CDN, and all future requests should be directed straight to that file instead of dynamically generating it again. _In this way, different devices will generate the various file combinations, and the second time a particular browser/device combo visits the site, the server can deliver that file much more efficiently. We also recommend pre-generating common file combinations during deployment so that many popular combinations will never need to be generated dynamically during a request_
+
+With `enhance.js` and `quickconcat.php` covered, we can move on to the actual enhancements.
+
+## Wrap
+
+Wrap is a simple framework of DOM utilities that is designed to target modern browsers without failing the rest. It is a simple dom wrapper function that is inspired by the jQuery API, designed to let you find elements and manipulate them. Uniquely however, Wrap is written in such a way that it'll only do anything at all in modern browsers, like Internet Explorer and up. Other browsers? They'll get a less-enhanced experience. There won't be errors, but there may be less _zing_. Assuming you're already building applications with Progressive Enhancement though, you should be fine without JavaScript enhancements - Wrap is built based on this presumption.
+
+The technical bits: Wrap itself is a simple, small (half a kilobyte), extendable core that handles not much more than the iterating of DOM nodes. It doesn't come with much more than a means of finding and generating HTML elements, a DOM-ready handler, and a few essential methods like `each`, `find`, `children`. Using its API however, wrap is easy to extend further.
+
+
+
+
 
 
