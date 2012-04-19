@@ -53,17 +53,50 @@ In that vein, we recommend that a dynamic file concatenation tool provides at le
 2. Minify the source files before or after combination, removing whitespace, comments, and in the case of JavaScript, optimizing the code itself to reduce its weight. Many open-source tools are available for this. We’d recommend checking out the Java-based [Google Closure Compiler](http://code.google.com/closure/compiler/) and [YUI Compressor](http://developer.yahoo.com/yui/compressor/) tools, or the Node.js-based [Uglify.js](https://github.com/mishoo/UglifyJS) (of these, YUI is designed to compress CSS as well).
 3. Transfer the output file in GZIP compressed format. Most server-side environments provide tools for gzip output (see the [QuickConcat Readme](https://github.com/filamentgroup/quickconcat#readme) for an example using Apache)
 4. When a particular combination of files is requested, its output should be saved as a static resource on the site's server or CDN, and all future requests should be directed straight to that file instead of dynamically generating it again. _In this way, different devices will generate the various file combinations, and the second time a particular browser/device combo visits the site, the server can deliver that file much more efficiently. We also recommend pre-generating common file combinations during deployment so that many popular combinations will never need to be generated dynamically during a request_
+5. For use with AjaxInclude (explained below), we recommend that the concatenation tool includes a feature to wrap each file contents in an identifier node, if requested to do so. For more information on this, please see "Configuring a concatenation tool to work with AjaxInclude" below.
 
 With `enhance.js` and `quickconcat.php` covered, we can move on to the actual enhancements.
 
 ## Wrap
 
-Wrap is a simple framework of DOM utilities that is designed to target modern browsers without failing the rest. It is a simple dom wrapper function that is inspired by the jQuery API, designed to let you find elements and manipulate them. Uniquely however, Wrap is written in such a way that it'll only do anything at all in modern browsers, like Internet Explorer and up. Other browsers? They'll get a less-enhanced experience. There won't be errors, but there may be less _zing_. Assuming you're already building applications with Progressive Enhancement though, you should be fine without JavaScript enhancements - Wrap is built based on this presumption.
+[Wrap](https://github.com/filamentgroup/wrap) is a simple framework of DOM utilities that is designed to target modern browsers without failing the rest. 
 
-The technical bits: Wrap itself is a simple, small (half a kilobyte), extendable core that handles not much more than the iterating of DOM nodes. It doesn't come with much more than a means of finding and generating HTML elements, a DOM-ready handler, and a few essential methods like `each`, `find`, `children`. Using its API however, wrap is easy to extend further.
+Within the Enhance workflow at Filament Group, we use Wrap for enhancing the user experience by manipulating markup, making Ajax requests, and any other common tasks one would do when using an unobtrusive JavaScript DOM framework.
 
+Wrap is inspired by the jQuery API, letting you find elements and manipulate them. Uniquely however, Wrap is written in such a way that it'll only do anything at all in modern browsers, like Internet Explorer 8 and up. Other browsers? They'll get a less-enhanced experience. There won't be errors, but there may be less _zing_. Assuming you're already building applications with Progressive Enhancement, you should be fine without JavaScript enhancements. In that way, jQuery and Wrap have dramatically different aims regarding support: jQuery works pretty much anywhere, and is fault-tolerant to infinite levels of developer happiness... Wrap: not so much. It only supports a subset of the nice things jQuery does, and almost that entire subset is optional. That combined with its browser support qualifications allow it to be a very small library, ideal – we find – for cross-device progressive enhancement.
 
+Technically, `wrap.js` itself is a simple, small (half a kb), extendable core function. Basically, you use Wrap like you use jQuery (just reference the `wrap` variable instead of `$` or `jQuery`), but it doesn't come with much more than a means of finding and generating HTML multiple elements, a DOM-ready handler, and a few essential element-iterating methods like `each`, `find`, `children`. Using its API, Wrap is simple to extend further, and many extensions are available in the Wrap project for you to include in your build.
 
+Check out the [Wrap project readme](https://github.com/filamentgroup/wrap#readme) for more information on use. 
 
+## AjaxInclude
 
+[AjaxInclude](https://github.com/filamentgroup/ajaxinclude), the final tool in our Progressive Enhancement stack, shapes the way we think about content and document construction in a major way. AjaxInclude uses the Wrap (or jQuery if you prefer) API to bring the concept of an "include" to HTML, allowing us to deliver lightweight web pages that contain only the most essential content, and lazy-loading additional content automatically via JavaScript.
+
+AjaxInclude works by referencing external fragments of HTML content via HTML5 data attributes. For example:
+
+    <a href="articles/latest/" data-before="articles/latest/fragment">Latest Articles</a>
+
+In this case, we have an ordinary link to external content, which is essential for accessibility across all devices, but the link is also tagged with a `data-before` attribute that references a URL that contains a fragment of that external content to pull into the page. The AjaxInclude plugin will see this and include that content _before_ the link.
+
+You can add these attributes to elements in your page anywhere non-essential fragments of content can be included from an external URL. jQuery-api-like qualifiers like `data-after`, `data-before`, `data-append`, and `data-replace` are all supported. Also, the `data-threshold` attr allows a min width for this to apply.
+
+Note: these attributes can be placed on any element, not just anchors. You might find `data-append` to be most useful on container elements.
+
+Once the DOM is ready, you can apply the plugin like this: 
+
+    $("[data-append],[data-replace],[data-after],[data-before]").ajaxInclude();
+	
+
+Perhaps the most powerful feature of AjaxInclude is that it can be used with a proxy file concatenator (such as [quickconcat](https://github.com/filamentgroup/quickconcat)) to fetch ALL includes via a single HTTP request! To use a proxy and include all ajax includes in one call, just pass in a URL that is ready to accept a list of files:
+
+    $("[data-append],[data-replace],[data-after],[data-before]").ajaxInclude( "quickconcat.php?wrap&files=" );
+
+### Configuring a concatenation tool to work with AjaxInclude
+
+AjaxInclude expects the concatenator's response to wrap each HTML file in an identifier element like this: `<entry url="..file url...">..content...</entry>`. That way, AjaxInclude can know which piece of HTML came from which file, and insert them in the proper places in the document. With QuickConcat, this is as simple as adding a `&wrap` parameter to the query string. Because of the benefits this provides the AjaxInclude technique, we recommend that this functionality be built as part of a dynamic concatenation tool as well, in the event that QuickConcat is not sufficient for production. For more information on how this works, check out the [quickconcat docs](https://github.com/filamentgroup/quickconcat#readme).
+
+## Wrap-up
+
+The tools above combine to form the backbone of the Enhance workflow. Now that you understand the foundations, seeing it all in action should bring additional clarity. This repository includes a demo ([_demo.html](_demo.html)) that uses "Enhance" and "QuickConcat" to conditionally load a set of JavaScript and CSS files. We'll look to improve the demo further to utilize Wrap and AjaxInclude as well soon, but this should give you a good idea of how things can work.
 
