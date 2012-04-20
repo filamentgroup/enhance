@@ -13,7 +13,7 @@
 	
 	// hasClass function - check if element has a class
 	ejs.hasClass = function( elem, cls ){
-		return elem.className.indexOf( cls ) >= -1
+		return elem.className.indexOf( cls ) > -1
 	}
 	
 	// Callback for running logic dependent on a property being defined
