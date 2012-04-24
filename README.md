@@ -37,7 +37,13 @@ All of the Enhance api is available via `window.ejs` or just `ejs`. From `ejs`, 
 		ejs.basepath.css = "assets/css/";
 		
 
+- `concatSyntax`: a predefined function that decorates a comma-delimited URL in whatever way necessary for a concatenator API. To configure, just redefine it as a function with a url argument, and return that url decorated any way your concatenator expects. By default, Enhance uses the  url pattern suggested in the [QuickConcat project]( https://github.com/filamentgroup/quickconcat). Example:
 
+		// decorate URL for a custom concatenator API
+		ejs.concatSyntax = function( url ){
+			return "/concat/" + url;
+		};
+		
 
 
 ### Methods
