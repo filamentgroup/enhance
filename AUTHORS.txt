@@ -1,0 +1,9 @@
+EnhanceJS is developed and maintained by Filament Group, Inc (filamentgroup.com)
+with contributions of code and ideas by the following individuals: 
+
+Brandon Aaron
+Scott Jehl
+Todd Parker
+Patty Toland
+Maggie Costello Wachs
+

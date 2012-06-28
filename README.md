@@ -3,7 +3,7 @@
 `Enhance.js` is a small JavaScript framework designed to help developers determine if a browser is qualified for enhancements, and load specific enhancements for that browser via a single, concatenated request (one for CSS and one for JavaScript).
 
 * Copyright 2012 @scottjehl, @beep, @wilto, @maggiewachs, and Filament Group, Inc. 
-* Dual license: MIT or GPLv2
+* Dual license: MIT or GPLv3
 
 ## API
 
