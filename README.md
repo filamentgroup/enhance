@@ -105,7 +105,7 @@ Enhance has a few more methods and properties that you might use in more complic
 		ejs.loadJS( "files/js/foo.php" );
 
 
-- `loadCSS`: Load a single CSS file**.  This method accepts one argument, a string reference to a file. Useful if JS filetype can not be guessed by filetype. Example:
+- `loadCSS`: Load a single CSS file.  This method accepts one argument, a string reference to a file. Useful if CSS filetype can not be guessed by filetype. Example:
 
 		// Load a single CSS file
 		ejs.loadCSS( "files/css/foo.php" );
