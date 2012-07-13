@@ -51,7 +51,7 @@ All of the Enhance api is available via `window.ejs` or just `ejs`. From `ejs`, 
 - `hasClass`: check whether an element has a particular class or not. Returns a boolean result. Example:
 
 		// check if HTML element has class of "ie8"
-		ejs.hasClass( document.documentElement, "home" );
+		ejs.hasClass( document.documentElement, "ie8" );
 		--> true | false
 
 - `onDefine`: run a callback function as soon as a JS property is defined, such as an HTML element like `body` that may not  have loaded at execution time. Accepts 2 arguments: a string to be evaluated for definition, and a callback function to execute when that first string becomes defined. `onDefine` might be used to run a script when an element is ready for manipulation, such as checking if the `body` element has a particular class. Example:
@@ -105,7 +105,7 @@ Enhance has a few more methods and properties that you might use in more complic
 		ejs.loadJS( "files/js/foo.php" );
 
 
-- `loadCSS`: Load a single CSS file**.  This method accepts one argument, a string reference to a file. Useful if JS filetype can not be guessed by filetype. Example:
+- `loadCSS`: Load a single CSS file.  This method accepts one argument, a string reference to a file. Useful if CSS filetype can not be guessed by filetype. Example:
 
 		// Load a single CSS file
 		ejs.loadCSS( "files/css/foo.php" );
