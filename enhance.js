@@ -6,22 +6,23 @@
 
 	var doc = w.document,
 		docElem = doc.documentElement,
-		head = doc.head || doc.getElementsByTagName( "head" )[ 0 ];
+		head = doc.head || doc.getElementsByTagName( "head" )[ 0 ],
+		ejs = {};
 	
 	//ejs object for ejs-specific functions
-	w.ejs = {};
+	w.ejs = ejs;
 	
 	// hasClass function - check if element has a class
 	ejs.hasClass = function( elem, cls ){
-		return elem.className.indexOf( cls ) > -1
-	}
+		return elem.className.indexOf( cls ) > -1;
+	};
 	
 	// Callback for running logic dependent on a property being defined
 	// You can use isDefined to run code as soon as the document.body is defined, for example, for body-dependent scripts
 	// or, for a script that's loaded asynchronously that depends on other scripts, such as jQuery.
 	// First argument is the property that must be defined, second is the callback function
 	ejs.onDefine = function( prop, callback ){
-		var callbackStack 	= [];
+		var callbackStack = [];
 		
 		if( callback ){
 			callbackStack.push( callback );
@@ -34,14 +35,14 @@
 				}
 			}
 			else{
-				setTimeout(checkRun, 15); 
+				setTimeout(checkRun, 15);
 			}
-		};
+		}
 		
 		checkRun();
 	};
 	
-	// shortcut of isDefine body-specific 
+	// shortcut of isDefine body-specific
 	ejs.bodyReady = function( callback ){
 		ejs.onDefine( "document.body", callback );
 	};
@@ -79,7 +80,7 @@
 		} else {
 			head.appendChild( script );
 		}
-	};	
+	};
 	
 	// Define base directory paths for referencing js, css, img files. Optional.
 	ejs.basepath = {
@@ -88,17 +89,17 @@
 	};
 	
 	// Define arrays to contain JS and CSS files that are available
-	ejs.files = {		
+	ejs.files = {
 		js: {},
 		css: {}
-	};	
+	};
 	
 	// Define arrays to contain JS and CSS files that will be loaded
 	ejs.jsToLoad = [];
 	ejs.cssToLoad = [];
 	
-	// Function for adding files to the queue for loading. 
-	// CSS or JS is discovered by file path. 
+	// Function for adding files to the queue for loading.
+	// CSS or JS is discovered by file path.
 	// Files should not include base paths, if already defined in ejs.basepath.
 	ejs.addFile = function( file ){
 		var js = file.indexOf( ".js" ) > -1;
@@ -110,7 +111,7 @@
 		return ( url.indexOf( ".js" ) > -1 ? ejs.loadJS : ejs.loadCSS )( url );
 	};
 	
-	// concatSyntax is a function that decorates a URL in whatever way necessary for a concatenator API. 
+	// concatSyntax is a function that decorates a URL in whatever way necessary for a concatenator API.
 	// To configure, just define it as a function with a url argument, and return that url decorated any way your concatenator expects.
 	// by default, Enhance uses the  url pattern suggested in the QuickConcat project: https://github.com/filamentgroup/quickconcat
 	ejs.concatSyntax = function( url ){
