@@ -2,7 +2,7 @@
 
 `Enhance.js` is a small JavaScript workflow designed to help developers progressively enhance a page in a qualified manner.
 
-* Copyright 2012 @scottjehl, @beep, @wilto, @maggiewachs, and Filament Group, Inc.
+* Copyright 2010-2014 @scottjehl, @beep, @wilto, @maggiewachs, and Filament Group, Inc.
 * License: MIT
 
 ## Overview
