@@ -19,9 +19,9 @@ By default though, it is set up to follow these steps:
 
 1. Define some variables and functions for loading assets and accessing information about the browser and markup
 2. Run one or more tests to see if a browser is qualified to load and render additional enhancements
-3.
-	a. If it's not qualified, exit early and do nothing more
-	b. If it is qualified, proceed on to load additional assets, add classes to the document, etc.
+3.   
+	- A. If it's not qualified, exit early and do nothing more
+	- B. If it is qualified, proceed on to load additional assets, add classes to the document, etc.
 
 
 ## How to use
