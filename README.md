@@ -66,15 +66,15 @@ Here's an example configuration for the head of a page. It uses SSI to detect co
 	...
 	<meta name="fullcss"  content="/path/to/full.css">
 	<meta name="fulljs"  content="/path/to/enhancements.js">
-	<script>
-		<!--#include virtual="/path/to/enhance.js" -->
-	</script>
 <!--#if expr="$HTTP_COOKIE=/fullcss\=true/" -->
 	<link rel="stylesheet" href="/path/to/full.css">
 <!--#else -->
 	<style>
 		/* critical CSS styles for this template go here... */
 	</style>
+	<script>
+		<!--#include virtual="/path/to/enhance.js" -->
+	</script>
 	<noscript><link rel="stylesheet" href="/path/to/full.css"></noscript>
 <!--#endif -->
 	...
