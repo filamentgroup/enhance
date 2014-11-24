@@ -72,11 +72,11 @@ Here's an example configuration for the head of a page. It uses SSI to detect co
 	<style>
 		/* critical CSS styles for this template go here... */
 	</style>
+<!--#endif -->	
 	<script>
 		<!--#include virtual="/path/to/enhance.js" -->
 	</script>
 	<noscript><link rel="stylesheet" href="/path/to/full.css"></noscript>
-<!--#endif -->
 	...
 </head>
 ```
