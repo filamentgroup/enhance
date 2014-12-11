@@ -51,7 +51,7 @@ For EnhanceJS to work best, a careful setup in the `head` of a page is necessary
 
 First, we recommend including [the critical CSS for each template of a site](https://github.com/filamentgroup/grunt-criticalCSS) directly in a `style` element in the head of the page, and requesting the rest of the site's CSS asynchronously. Once we've fetched the full CSS for the site, we like to set a cookie to tell our server-side templates to reference that CSS file directly with a `link` element on subsequent visits, instead of any inline styles.
 
-We also recommend loading any non-critical JavaScript asynchronously as well, and the `loadCSS` function in EnhanceJS allows us to do that in a qualified manner, so older and underfeatured browsers don't need to be bothered by DOM Frameworks and such.
+We also recommend loading any non-critical JavaScript asynchronously as well, and the `loadJS` function in EnhanceJS allows us to do that in a qualified manner, so older and underfeatured browsers don't need to be bothered by DOM Frameworks and such.
 
 To define URLs for files that may be requested by EnhanceJS, such as a file containing JavaScript enhancements, we like to use `meta` tags in the `head` of our page.
 
