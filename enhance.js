@@ -4,8 +4,7 @@
 	// Enable JS strict mode
 	"use strict";
 
-	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
-	window.enhance = {};
+	var enhance = {};
 
 	// Define some variables to be used throughout this file
 	var doc = window.document,
@@ -174,5 +173,8 @@
 	if( fonts ){
 		loadCSS( fonts.content );
 	}
+
+	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
+  window.enhance = enhance;
 
 }( this ));
