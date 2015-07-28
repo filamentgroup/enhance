@@ -78,6 +78,16 @@
 	// expose it
 	enhance.loadCSS = loadCSS;
 
+	// load multiple files using loadCSS or loadJS
+	// example usage: loadMultiple(fullCSS.content, loadCSS, ',');
+	function loadMultiple(string, fn, separator) {
+		var arr = string.split(separator)
+		for (var i = arr.length - 1; i >= 0; i--) {
+			fn(arr[i]);
+		}
+	}
+	enhance.loadMultiple = multiple; // expose it
+
 	// getMeta function: get a meta tag by name
 	// NOTE: meta tag must be in the HTML source before this script is included in order to guarantee it'll be found
 	function getMeta( metaname ){
@@ -97,7 +107,7 @@
 
 	// cookie function from https://github.com/filamentgroup/cookie/
 	function cookie( name, value, days ){
-    var expires;
+		var expires;
 		// if value is undefined, get the cookie value
 		if( value === undefined ){
 			var cookiestring = "; " + window.document.cookie;
@@ -137,7 +147,7 @@
 		*/
 	var fullCSS = getMeta( fullCSSKey );
 	if( fullCSS && !cookie( fullCSSKey ) ){
-		loadCSS( fullCSS.content );
+		loadMultiple( fullCSS.content, loadCSS, ',' );
 		// set cookie to mark this file fetched
 		cookie( fullCSSKey, "true", 7 );
 	}
@@ -163,7 +173,7 @@
 		*/
 	var fullJS = getMeta( fullJSKey );
 	if( fullJS ){
-		loadJS( fullJS.content );
+		loadMultiple( fullJS.content, loadJS, ',' );
 	}
 
 	/* Load custom fonts
@@ -174,7 +184,7 @@
 		*/
 	var fonts = getMeta( fontsKey );
 	if( fonts ){
-		loadCSS( fonts.content );
+		loadMultiple( fonts.content, loadCSS, ',' );
 	}
 
 	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.

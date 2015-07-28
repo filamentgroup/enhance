@@ -19,7 +19,7 @@ By default though, it is set up to follow these steps:
 
 1. Define some variables and functions for loading assets and accessing information about the browser and markup
 2. Run one or more tests to see if a browser is qualified to load and render additional enhancements
-3.   
+3.
 	- A. If it's not qualified, exit early and do nothing more
 	- B. If it is qualified, proceed on to load additional assets, add classes to the document, etc.
 
@@ -55,6 +55,10 @@ We also recommend loading any non-critical JavaScript asynchronously as well, an
 
 To define URLs for files that may be requested by EnhanceJS, such as a file containing JavaScript enhancements, we like to use `meta` tags in the `head` of our page.
 
+#### Loading multiple files
+
+The `loadMultiple` function has been added to allow multiple CSS or JS files to be loaded. If, for example you had `<meta name="fullcss"  content="/path/to/full.css,/path/to/sectionFull.css">` in your `meta` tags, `loadMultiple` would be used like so: `loadMultiple( fullCSS.content, loadCSS, ',' );`.
+
 ### A fully-configured `head` setup for EnhanceJS
 
 Here's an example configuration for the head of a page. It uses SSI to detect cookies and decide whether to inline CSS or request it directly.
@@ -72,7 +76,7 @@ Here's an example configuration for the head of a page. It uses SSI to detect co
 	<style>
 		/* critical CSS styles for this template go here... */
 	</style>
-<!--#endif -->	
+<!--#endif -->
 	<script>
 		<!--#include virtual="/path/to/enhance.js" -->
 	</script>
@@ -86,6 +90,6 @@ Here's an example configuration for the head of a page. It uses SSI to detect co
 
 Enhance.js exposes an object called `window.enhance` or just `enhance`. You can place whatever enhancement-related properties and methods on this object that you might want to use elsewhere in your codebase, or, none at all.
 
-By default, we typically expose functions like `loadCSS`, `loadJS`, `getMeta`, and `cookie`, so that we can use these in other scripts in our codebase.
+By default, we typically expose functions like `loadCSS`, `loadJS`, `loadMultiple`, `getMeta`, and `cookie`, so that we can use these in other scripts in our codebase.
 
 You might choose to expose feature support information, or even user agent info if you really need that.
