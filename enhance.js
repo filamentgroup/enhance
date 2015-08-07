@@ -136,10 +136,10 @@
 		Once the cookie is set, the full CSS is assumed to be in cache, and the server-side templates should reference the full CSS directly from the head of the page with a link element, in place of inline critical styles.
 		*/
 	var fullCSS = getMeta( fullCSSKey );
-	if( fullCSS && !cookie( fullCSSKey ) ){
+	if( fullCSS && fullCSS.content !== cookie( fullCSSKey ) ){
 		loadCSS( fullCSS.content );
 		// set cookie to mark this file fetched
-		cookie( fullCSSKey, "true", 7 );
+		cookie( fullCSSKey, fullCSS.content, 7 );
 	}
 
 	/* Enhancements for qualified browsers - "Cutting the Mustard"
