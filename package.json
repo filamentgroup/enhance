@@ -1,0 +1,52 @@
+{
+  "name": "fg-enhance",
+  "title": "enhance",
+  "description": "A JavaScript workflow designed to progressively enhance sites in a qualified manner.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/filamentgroup/enhance",
+  "author": {
+    "name": "Scott Jehl",
+    "company": "Filament Group",
+    "email": "scott@filamentgroup.com",
+    "url": "http://filamentgroup.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/filamentgroup/enhance.git"
+  },
+  "bugs": "https://github.com/filamentgroup/enhance/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/filamentgroup/enhance/blob/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/grunt travis"
+  },
+  "dependencies": {
+    "fg-loadcss": "0.2.0",
+    "fg-loadjs": "0.2.0",
+    "fg-cookie": "0.1.0",
+    "fontfaceobserver": "1.5.4"
+  },
+  "devDependencies": {
+    "qunitjs": "^1.17.1",
+    "grunt": "~0.4.2",
+    "grunt-bytesize": "~0.1.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-compress": "~0.12.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "~0.7.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-qunit": "~0.2.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-gh-pages": "~0.9.0",
+    "matchdep": "~0.1.2"
+  }
+}

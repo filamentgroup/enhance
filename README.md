@@ -2,12 +2,12 @@
 
 `Enhance.js` is a small JavaScript workflow designed to help developers progressively enhance a page in a qualified manner.
 
-* Copyright 2012 @scottjehl, @beep, @wilto, @maggiewachs, and Filament Group, Inc.
+* Copyright 2015 @scottjehl, @beep, @wilto, @maggiewachs, and Filament Group, Inc.
 * License: MIT
 
 ## Overview
 
-As of version 2, Enhance.js is no longer meant to be a library or framework, but rather an editable boilerplate file. It is small, delete-key-friendly, and meant to be included "inline" in the `head` of a page and edited to the needs of your project.
+Enhance.js is not meant to be a library or framework, but rather an editable boilerplate file. It is small, delete-key-friendly, and meant to be included "inline" in the `head` of a page and edited to the needs of your project.
 
 We typically use Enhance.js to run brief browser diagnostics before deciding whether to enhance a basic, but already-functional page further by adding classes and requesting additional scripts and stylesheets.
 

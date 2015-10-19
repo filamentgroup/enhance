@@ -1,3 +1,6 @@
+/*! enhance - v0.1.0 - 2015-10-19
+* https://github.com/filamentgroup/enhance
+* Copyright (c) 2015 Filament Group; Licensed MIT */
 /*! EnhanceJS: a progressive enhancement boilerplate. Copyright 2014 @scottjehl, Filament Group, Inc. Licensed MIT */
 (function( window, undefined ) {
 
@@ -5,12 +8,11 @@
 	"use strict";
 
 	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
-	window.enhance = {};
+	var enhance = window.enhance = {};
 
 	// Define some variables to be used throughout this file
 	var doc = window.document,
 		docElem = doc.documentElement,
-		head = doc.head || doc.getElementsByTagName( "head" )[ 0 ],
 		// this references a meta tag's name whose content attribute should define the path to the full CSS file for the site
 		fullCSSKey = "fullcss",
 		// this references a meta tag's name whose content attribute should define the path to the enhanced JS file for the site (delivered to qualified browsers)
@@ -77,7 +79,7 @@
 		if( value === undefined ){
 			var cookiestring = "; " + window.document.cookie;
 			var cookies = cookiestring.split( "; " + name + "=" );
-			if ( cookies.length == 2 ){
+			if ( cookies.length === 2 ){
 				return cookies.pop().split( ";" ).shift();
 			}
 			return null;
@@ -87,13 +89,11 @@
 			if( value === false ){
 				days = -1;
 			}
+			var expires = "";
 			if ( days ) {
 				var date = new Date();
 				date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-				var expires = "; expires="+date.toGMTString();
-			}
-			else {
-				var expires = "";
+				expires = "; expires="+date.toGMTString();
 			}
 			window.document.cookie = name + "=" + value + expires + "; path=/";
 		}
