@@ -1,11 +1,12 @@
-/*! enhance - v0.1.0 - 2015-11-02
+/*! enhance - v0.1.0 - 2015-11-03
 * https://github.com/filamentgroup/enhance
 * Copyright (c) 2015 Filament Group; Licensed MIT */
 
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
 /*! cookie function. get, set, or forget a cookie. [c]2014 @scottjehl, Filament Group, Inc. Licensed MIT */
 (function(w){
-	w.cookie = function( name, value, days ){
+	var cookie = function( name, value, days ){
 		// if value is undefined, get the cookie value
 		if( value === undefined ){
 			var cookiestring = "; " + w.document.cookie;
@@ -31,15 +32,20 @@
 	};
 	// commonjs
 	if( typeof module !== "undefined" ){
-		module.exports = w.cookie;
+		module.exports = cookie;
 	}
-}( this ));
+	else {
+		w.cookie = cookie;
+	}
+}( typeof global !== "undefined" ? global : this ));
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(require,module,exports){
+(function (global){
 // getMeta function: get a meta tag's content attr by its name
 (function( w ){
-  w.getMeta = function( metaname ){
-  	var metas = window.document.getElementsByTagName( "meta" );
+  var getMeta = function( metaname ){
+  	var metas = w.document.getElementsByTagName( "meta" );
   	var meta;
   	for( var i = 0; i < metas.length; i ++ ){
   		if( metas[ i ].name && metas[ i ].name === metaname ){
@@ -47,16 +53,21 @@
   			break;
   		}
   	}
-  	return meta.content;
+  	return meta && meta.content;
   };
   
   // commonjs
   if( typeof module !== "undefined" ){
-  	module.exports = w.getMeta;
+  	module.exports = getMeta;
   }
-}( this ));
+  else {
+    w.getMeta = getMeta
+  }
+}( typeof global !== "undefined" ? global : this ));
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(require,module,exports){
+(function (global){
 /*!
 loadCSS: load a CSS file asynchronously.
 [c]2015 @scottjehl, Filament Group, Inc.
@@ -65,7 +76,7 @@ Licensed MIT
 (function(w){
 	"use strict";
 	/* exported loadCSS */
-	w.loadCSS = function( href, before, media ){
+	var loadCSS = function( href, before, media ){
 		// Arguments explained:
 		// `href` [REQUIRED] is the URL for your CSS file.
 		// `before` [OPTIONAL] is the element the script should use as a reference for injecting our stylesheet <link> before
@@ -115,18 +126,23 @@ Licensed MIT
 	};
 	// commonjs
 	if( typeof module !== "undefined" ){
-		module.exports = w.loadCSS;
+		module.exports = loadCSS;
 	}
-}(this));
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ));
 
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],4:[function(require,module,exports){
+(function (global){
 /*! loadJS: load a JS file asynchronously. [c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). Licensed MIT */
 (function( w ){
-	w.loadJS = function( src, cb ){
+	var loadJS = function( src, cb ){
 		"use strict";
-		var ref = window.document.getElementsByTagName( "script" )[ 0 ];
-		var script = window.document.createElement( "script" );
+		var ref = w.document.getElementsByTagName( "script" )[ 0 ];
+		var script = w.document.createElement( "script" );
 		script.src = src;
 		script.async = true;
 		ref.parentNode.insertBefore( script, ref );
@@ -137,23 +153,26 @@ Licensed MIT
 	};
 	// commonjs
 	if( typeof module !== "undefined" ){
-		module.exports = w.loadJS;
+		module.exports = loadJS;
 	}
-}( this ));
+	else {
+		w.loadJS = loadJS;
+	}
+}( typeof global !== "undefined" ? global : this ));
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],5:[function(require,module,exports){
+(function (global){
 /*! EnhanceJS: a progressive enhancement boilerplate. Copyright 2014 @scottjehl, Filament Group, Inc. Licensed MIT */
-var loadCSS = require( "fg-loadcss/loadCSS" );
-var loadJS = require( "fg-loadjs/loadJS" );
-var cookie = require( "fg-cookie/cookie" );
-var getMeta = require( "fg-getmeta/getmeta.js" );
-
 (function( window, undefined ) {
 
 	// Enable JS strict mode
 	"use strict";
 
-
+	var loadCSS = require( "fg-loadcss/loadCSS" );
+	var loadJS = require( "fg-loadjs/loadJS" );
+	var cookie = require( "fg-cookie/cookie" );
+	var getMeta = require( "fg-getmeta/getmeta.js" );
 
 
 	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
@@ -225,5 +244,6 @@ var getMeta = require( "fg-getmeta/getmeta.js" );
 		loadCSS( fonts );
 	}
 
-}( this ));
+}( typeof global !== "undefined" ? global : this ));
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"fg-cookie/cookie":1,"fg-getmeta/getmeta.js":2,"fg-loadcss/loadCSS":3,"fg-loadjs/loadJS":4}]},{},[5]);

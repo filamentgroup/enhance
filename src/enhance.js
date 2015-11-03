@@ -79,4 +79,4 @@
 		loadCSS( fonts );
 	}
 
-}( this ));
+}( typeof global !== "undefined" ? global : this ));

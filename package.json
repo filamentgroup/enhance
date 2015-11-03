@@ -28,10 +28,10 @@
     "test": "./node_modules/.bin/grunt travis"
   },
   "dependencies": {
-    "fg-loadcss": "0.2.2",
-    "fg-loadjs": "0.2.1",
-    "fg-cookie": "0.1.1",
-    "fg-getmeta": "0.1.0",
+    "fg-loadcss": "0.2.4",
+    "fg-loadjs": "0.2.3",
+    "fg-cookie": "0.1.3",
+    "fg-getmeta": "0.1.2",
     "fontfaceobserver": "1.5.4"
   },
   "devDependencies": {

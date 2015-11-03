@@ -1,6 +1,6 @@
 /*! cookie function. get, set, or forget a cookie. [c]2014 @scottjehl, Filament Group, Inc. Licensed MIT */
 (function(w){
-	w.cookie = function( name, value, days ){
+	var cookie = function( name, value, days ){
 		// if value is undefined, get the cookie value
 		if( value === undefined ){
 			var cookiestring = "; " + w.document.cookie;
@@ -26,6 +26,9 @@
 	};
 	// commonjs
 	if( typeof module !== "undefined" ){
-		module.exports = w.cookie;
+		module.exports = cookie;
 	}
-}( this ));
+	else {
+		w.cookie = cookie;
+	}
+}( typeof global !== "undefined" ? global : this ));
