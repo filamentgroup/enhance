@@ -1,5 +1,5 @@
 /*! EnhanceJS: a progressive enhancement boilerplate. Copyright 2014 @scottjehl, Filament Group, Inc. Licensed MIT */
-(function( window, undefined ) {
+(function( w ) {
 
 	// Enable JS strict mode
 	"use strict";
@@ -7,18 +7,17 @@
 	var loadCSS = require( "fg-loadcss/loadCSS" );
 	var loadJS = require( "fg-loadjs/loadJS" );
 	var cookie = require( "fg-cookie/cookie" );
-	var getMeta = require( "fg-getmeta/getmeta.js" );
-
+	var getMeta = require( "fg-getmeta/getmeta" );
 
 	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
-	var enhance = window.enhance = {};
+	var enhance = w.enhance = {};
 	enhance.loadCSS = loadCSS;
 	enhance.loadJS = loadJS;
 	enhance.cookie = cookie;
 	enhance.getMeta = getMeta;
 
 	// Define some variables to be used throughout this file
-	var doc = window.document,
+	var doc = w.document,
 		docElem = doc.documentElement,
 		// this references a meta tag's name whose content attribute should define the path to the full CSS file for the site
 		fullCSSKey = "fullcss",
@@ -49,7 +48,7 @@
 		For example, you might choose to only enhance browsers that support document.querySelector (IE8+, etc).
 		Use case will vary.
 		*/
-	if( !( "querySelector" in doc ) ){
+	if( !( "querySelector" in w.doc ) ){
 		// basic browsers: last stop here!
 		return;
 	}
