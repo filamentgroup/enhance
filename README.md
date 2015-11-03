@@ -20,8 +20,8 @@ By default though, it is set up to follow these steps:
 1. Define some variables and functions for loading assets and accessing information about the browser and markup
 2. Run one or more tests to see if a browser is qualified to load and render additional enhancements
 3.
-	a. If it's not qualified, exit early and do nothing more
-	b. If it is qualified, proceed on to load additional assets, add classes to the document, etc.
+	- A. If it's not qualified, exit early and do nothing more
+	- B. If it is qualified, proceed on to load additional assets, add classes to the document, etc.
 
 
 ## How to use
@@ -49,9 +49,9 @@ TODO: A lot of this information should move to the SouthStreet Project, to expla
 
 For EnhanceJS to work best, a careful setup in the `head` of a page is necessary.
 
-First, we recommend including the critical CSS for each template of a site directly in a `style` element in the head of the page, and requesting the rest of the site's CSS asynchronously. Once we've fetched the full CSS for the site, we like to set a cookie to tell our server-side templates to reference that CSS file directly with a `link` element on subsequent visits, instead of any inline styles.
+First, we recommend including [the critical CSS for each template of a site](https://github.com/filamentgroup/grunt-criticalCSS) directly in a `style` element in the head of the page, and requesting the rest of the site's CSS asynchronously. Once we've fetched the full CSS for the site, we like to set a cookie to tell our server-side templates to reference that CSS file directly with a `link` element on subsequent visits, instead of any inline styles.
 
-We also recommend loading any non-critical JavaScript asynchronously as well, and the `loadCSS` function in EnhanceJS allows us to do that in a qualified manner, so older and underfeatured browsers don't need to be bothered by DOM Frameworks and such.
+We also recommend loading any non-critical JavaScript asynchronously as well, and the `loadJS` function in EnhanceJS allows us to do that in a qualified manner, so older and underfeatured browsers don't need to be bothered by DOM Frameworks and such.
 
 To define URLs for files that may be requested by EnhanceJS, such as a file containing JavaScript enhancements, we like to use `meta` tags in the `head` of our page.
 
@@ -66,17 +66,17 @@ Here's an example configuration for the head of a page. It uses SSI to detect co
 	...
 	<meta name="fullcss"  content="/path/to/full.css">
 	<meta name="fulljs"  content="/path/to/enhancements.js">
-	<script>
-		<!--#include virtual="/path/to/enhance.js" -->
-	</script>
 <!--#if expr="$HTTP_COOKIE=/fullcss\=true/" -->
 	<link rel="stylesheet" href="/path/to/full.css">
 <!--#else -->
 	<style>
 		/* critical CSS styles for this template go here... */
 	</style>
-	<noscript><link rel="stylesheet" href="/path/to/full.css"></noscript>
 <!--#endif -->
+	<script>
+		<!--#include virtual="/path/to/enhance.js" -->
+	</script>
+	<noscript><link rel="stylesheet" href="/path/to/full.css"></noscript>
 	...
 </head>
 ```
