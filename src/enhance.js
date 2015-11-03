@@ -7,7 +7,7 @@
 	var loadCSS = require( "fg-loadcss/loadCSS" );
 	var loadJS = require( "fg-loadjs/loadJS" );
 	var cookie = require( "fg-cookie/cookie" );
-	var getMeta = require( "fg-getmeta/getmeta.js" );
+	var getMeta = require( "fg-getmeta/getmeta" );
 
 
 	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
