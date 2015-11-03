@@ -4,8 +4,18 @@
 	// Enable JS strict mode
 	"use strict";
 
+	var loadCSS = require( "fg-loadcss/loadCSS" );
+	var loadJS = require( "fg-loadjs/loadJS" );
+	var cookie = require( "fg-cookie/cookie" );
+	var getMeta = require( "fg-getmeta/getmeta.js" );
+
+
 	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
 	var enhance = window.enhance = {};
+	enhance.loadCSS = loadCSS;
+	enhance.loadJS = loadJS;
+	enhance.cookie = cookie;
+	enhance.getMeta = getMeta;
 
 	// Define some variables to be used throughout this file
 	var doc = window.document,
@@ -19,86 +29,6 @@
 		// classes to be added to the HTML element in qualified browsers
 		htmlClasses = [ "enhanced" ];
 
-	/* Some commonly used functions - delete anything you don't need! */
-
-	// loadJS: load a JS file asynchronously. Included from https://github.com/filamentgroup/loadJS/
-	function loadJS( src ){
-		var ref = window.document.getElementsByTagName( "script" )[ 0 ];
-		var script = window.document.createElement( "script" );
-		script.src = src;
-		ref.parentNode.insertBefore( script, ref );
-		return script;
-	}
-
-	// expose it
-	enhance.loadJS = loadJS;
-
-	// loadCSS: load a CSS file asynchronously. Included from https://github.com/filamentgroup/loadCSS/
-	function loadCSS( href, before, media ){
-		var ss = window.document.createElement( "link" );
-		var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
-		ss.rel = "stylesheet";
-		ss.href = href;
-		// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
-		ss.media = "only x";
-		// inject link
-		ref.parentNode.insertBefore( ss, ref );
-		// set media back to `all` so that the styleshet applies once it loads
-		setTimeout( function(){
-			ss.media = media || "all";
-		} );
-		return ss;
-	}
-
-	// expose it
-	enhance.loadCSS = loadCSS;
-
-	// getMeta function: get a meta tag by name
-	// NOTE: meta tag must be in the HTML source before this script is included in order to guarantee it'll be found
-	function getMeta( metaname ){
-		var metas = window.document.getElementsByTagName( "meta" );
-		var meta;
-		for( var i = 0; i < metas.length; i ++ ){
-			if( metas[ i ].name && metas[ i ].name === metaname ){
-				meta = metas[ i ];
-				break;
-			}
-		}
-		return meta;
-	}
-
-	// expose it
-	enhance.getMeta = getMeta;
-
-	// cookie function from https://github.com/filamentgroup/cookie/
-	function cookie( name, value, days ){
-		// if value is undefined, get the cookie value
-		if( value === undefined ){
-			var cookiestring = "; " + window.document.cookie;
-			var cookies = cookiestring.split( "; " + name + "=" );
-			if ( cookies.length === 2 ){
-				return cookies.pop().split( ";" ).shift();
-			}
-			return null;
-		}
-		else {
-			// if value is a false boolean, we'll treat that as a delete
-			if( value === false ){
-				days = -1;
-			}
-			var expires = "";
-			if ( days ) {
-				var date = new Date();
-				date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-				expires = "; expires="+date.toGMTString();
-			}
-			window.document.cookie = name + "=" + value + expires + "; path=/";
-		}
-	}
-
-	// expose it
-	enhance.cookie = cookie;
-
 	/* Enhancements for all browsers - qualified or not */
 
 	/* Load non-critical CSS async on first visit:
@@ -109,7 +39,7 @@
 		*/
 	var fullCSS = getMeta( fullCSSKey );
 	if( fullCSS && !cookie( fullCSSKey ) ){
-		loadCSS( fullCSS.content );
+		loadCSS( fullCSS );
 		// set cookie to mark this file fetched
 		cookie( fullCSSKey, "true", 7 );
 	}
@@ -135,7 +65,7 @@
 		*/
 	var fullJS = getMeta( fullJSKey );
 	if( fullJS ){
-		loadJS( fullJS.content );
+		loadJS( fullJS );
 	}
 
 	/* Load custom fonts
@@ -146,7 +76,7 @@
 		*/
 	var fonts = getMeta( fontsKey );
 	if( fonts ){
-		loadCSS( fonts.content );
+		loadCSS( fonts );
 	}
 
 }( this ));

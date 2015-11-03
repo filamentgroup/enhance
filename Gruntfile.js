@@ -15,16 +15,36 @@ module.exports = function(grunt) {
 		clean: {
 			dependencies: ['dist/']
 		},
-		concat: {
+		copy: {
+			cookie: {
+				src: "./node_modules/fg-cookie/cookie.js",
+				dest: "dist/dependencies/fg-cookie/cookie.js"
+			},
+			loadCSS: {
+				src: "./node_modules/fg-loadcss/loadCSS.js",
+				dest: "dist/dependencies/fg-loadcss/loadCSS.js"
+			},
+			loadJS: {
+				src: "./node_modules/fg-loadjs/loadJS.js",
+				dest: "dist/dependencies/fg-loadjs/loadJS.js"
+			},
+			getmeta: {
+				src: "./node_modules/fg-getmeta/getmeta.js",
+				dest: "dist/dependencies/fg-getmeta/getmeta.js"
+			},
+			fontFaceObserver: {
+				src: "./node_modules/fontfaceobserver/fontfaceobserver.js",
+				dest: "dist/dependencies/fontfaceobserver/fontfaceobserver.js"
+			},
+		},
+		browserify: {
 			options: {
 				banner: '<%= banner %>',
-				stripBanners: true
 			},
-			core: {
-				src: [
-					'src/enhance.js'
-				],
-				dest: 'dist/<%= pkg.name %>.js'
+			dist: {
+				files: {
+					'dist/enhance.js': ['src/enhance.js']
+				}
 			}
 		},
 		jshint: {
@@ -41,14 +61,14 @@ module.exports = function(grunt) {
 				tasks: ['jshint:gruntfile']
 			},
 			src: {
-				files: ['<%= concat.core.src %>'],
+				files: ['src/*.js'],
 				tasks: ['default']
 			}
 		},
 		uglify: {
 			js: {
 				files: {
-					'dist/<%= pkg.name %>.min.js': [ 'dist/<%= pkg.name %>.js' ]
+					'dist/enhance.min.js': [ 'dist/enhance.js' ]
 				}
 			}
 		},
@@ -65,7 +85,7 @@ module.exports = function(grunt) {
 
 	// Default task.
 	grunt.registerTask('travis', ['jshint']);
-	grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify', 'bytesize']);
+	grunt.registerTask('default', ['jshint', 'clean', 'copy', 'browserify', 'uglify', 'bytesize']);
 
 
 
