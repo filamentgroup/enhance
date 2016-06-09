@@ -162,8 +162,27 @@
 		A meta tag with a name matching the fullJSKey should have a content attribute referencing the path to this JavaScript file.
 		*/
 	var fullJS = getMeta( fullJSKey );
+	// Add scoping classes to HTML element
+	function addEnhanceClass(){
+		docElem.className += " " + docClasses.join(" ");
+	}
+
+	function removeEnhanceClass(){
+		docElem.className = docElem.className.replace( docClasses.join(" "), " " );
+	}
+
+	addEnhanceClass();
+
+	// load global js on any template
 	if( fullJS ){
-		loadJS( fullJS.content );
+		var script = loadJS( urlFullJS.content );
+		var fallback = setTimeout( removeEnhanceClass, 8000 );
+
+		script.onload = function(){
+			clearTimeout( fallback );
+			// just in case it was removed already (we can't cancel this request so it might arrive any time)
+			addEnhanceClass();
+		};
 	}
 
 	/* Load custom fonts
