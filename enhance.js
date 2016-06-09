@@ -175,7 +175,7 @@
 
 	// load global js on any template
 	if( fullJS ){
-		var script = loadJS( urlFullJS.content );
+		var script = loadJS( fullJS.content );
 		var fallback = setTimeout( removeEnhanceClass, 8000 );
 
 		script.onload = function(){
