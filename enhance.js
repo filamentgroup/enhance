@@ -198,6 +198,7 @@
 	}
 
 	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
-	window.enhance = enhance;
+	if( !window.enchance )
+		window.enhance = enhance;
 
 }( this ));
