@@ -4,7 +4,7 @@
 	// Enable JS strict mode
 	"use strict";
 
-  var setTimeout = window.setTimeout;
+	var setTimeout = window.setTimeout;
 
 	var enhance = {};
 
@@ -97,7 +97,8 @@
 
 	// cookie function from https://github.com/filamentgroup/cookie/
 	function cookie( name, value, days ){
-    var expires;
+	    var expires;
+
 		// if value is undefined, get the cookie value
 		if( value === undefined ){
 			var cookiestring = "; " + window.document.cookie;
@@ -197,6 +198,6 @@
 	}
 
 	// expose the 'enhance' object globally. Use it to expose anything in here that's useful to other parts of your application.
-  window.enhance = enhance;
+	window.enhance = enhance;
 
 }( this ));
