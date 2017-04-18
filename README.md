@@ -1,4 +1,4 @@
-#Enhance.js
+# Enhance.js
 
 `Enhance.js` is a small JavaScript workflow designed to help developers progressively enhance a page in a qualified manner.
 
