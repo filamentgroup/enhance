@@ -154,9 +154,6 @@
 
 	// From here on we're dealing with qualified browsers.
 
-	// Add scoping classes to HTML element: useful for upgrading the presentation of elements that will be enhanced with JS behavior
-	docElem.className += " " + htmlClasses.join(" ");
-
 	/* Load JavaScript enhancements in one request.
 		Your DOM framework and dependent component scripts should be concatenated and minified into one file that we'll load dynamically (keep that file as small as possible!)
 		A meta tag with a name matching the fullJSKey should have a content attribute referencing the path to this JavaScript file.
@@ -171,6 +168,7 @@
 		docElem.className = docElem.className.replace( htmlClasses.join(" "), " " );
 	}
 
+	// Add scoping classes to HTML element: useful for upgrading the presentation of elements that will be enhanced with JS behavior
 	addEnhanceClass();
 
 	// load global js on any template
