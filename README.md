@@ -1,3 +1,5 @@
+:warning: This project is archived and the repository is no longer maintained. 
+
 #Enhance.js
 
 `Enhance.js` is a small JavaScript workflow designed to help developers progressively enhance a page in a qualified manner.
